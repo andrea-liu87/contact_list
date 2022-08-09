@@ -4,6 +4,7 @@ import 'package:upwork_practice/constants/app_const.dart';
 import 'package:upwork_practice/constants/route_names.dart';
 
 import '../../entities/contact.dart';
+import '../home_page/contact_list_controller.dart';
 
 final selectedContactProvider = StateProvider<Contact?>((ref) {
   return null;
@@ -71,6 +72,13 @@ class _DetailPageState extends ConsumerState<DetailPage> {
                             Navigator.pushNamed(context, RouteNames.addPage);
                           },
                             text: 'EDIT',),
+                          const SizedBox(width: 5,),
+                          EditButton(
+                            onPressed: (){
+                              ref.read(contactListControllerProvider.notifier).deleteContact(contact: contactData);
+                              Navigator.pushNamedAndRemoveUntil(context, RouteNames.homePage, (Route<dynamic> route) => false);
+                            },
+                            text: 'DELETE',),
                         ],
                       ),
                     ),

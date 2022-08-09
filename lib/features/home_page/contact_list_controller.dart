@@ -24,10 +24,22 @@ class ContactListController extends StateNotifier<AsyncValue<List<Contact>>> {
 
   saveContact({required Contact contact}) async {
     await _contactListRepository.saveContact(contact);
+    await refreshList();
   }
 
   updateContact({required Contact contact}) async {
     await _contactListRepository.updateContact(contact);
+    refreshList();
+  }
+
+  deleteContact({required Contact contact}) async {
+    await _contactListRepository.deleteContact(contact.id);
+    refreshList();
+  }
+
+  Future<void> refreshList() async {
+    List<Contact> contactList = await _contactListRepository.getContactList(filterText);
+    state = AsyncValue.data(contactList);
   }
 }
 

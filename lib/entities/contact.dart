@@ -6,7 +6,7 @@ const String surenameColumn = 'surenameColumn';
 const String emailColumn = 'emailColumn';
 
 class Contact {
-  int id;
+  int id = 0;
   final String name;
   final String surename;
   final String email;
