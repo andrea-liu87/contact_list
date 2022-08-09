@@ -1,14 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:upwork_practice/constants/app_const.dart';
 import 'package:upwork_practice/constants/route_names.dart';
-import 'package:upwork_practice/features/home_page/home_page.dart';
 
 import '../../entities/contact.dart';
 
-class DetailPage extends StatelessWidget {
+final selectedContactProvider = StateProvider<Contact?>((ref) {
+  return null;
+});
+class DetailPage extends ConsumerStatefulWidget {
   const DetailPage({
     Key? key,
   }) : super(key: key);
+
+  @override
+  ConsumerState<DetailPage> createState() => _DetailPageState();
+}
+
+class _DetailPageState extends ConsumerState<DetailPage> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +67,8 @@ class DetailPage extends StatelessWidget {
                         children: [
                           EditButton(
                             onPressed: (){
-                            Navigator.pushNamed(context, RouteNames.addPage,
-                                arguments: contactData);
+                              ref.read(selectedContactProvider.state).state = contactData;
+                            Navigator.pushNamed(context, RouteNames.addPage);
                           },
                             text: 'EDIT',),
                         ],

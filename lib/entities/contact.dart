@@ -1,16 +1,45 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/material.dart';
 
-part 'contact.freezed.dart';
-part 'contact.g.dart';
+const String idColumn = 'idColumn';
+const String nameColumn = 'nameColumn';
+const String surenameColumn = 'surenameColumn';
+const String emailColumn = 'emailColumn';
 
-@freezed
-class Contact with _$Contact {
-  const factory Contact({
-    required String name,
-    required String surename,
-    required String email,
-  }) = _Contact;
+class Contact {
+  int id;
+  final String name;
+  final String surename;
+  final String email;
 
-  factory Contact.fromJson(Map<String, Object?> json) =>
-      _$ContactFromJson(json);
+  Contact({
+    required this.id,
+    required this.name,
+    required this.surename,
+    required this.email,
+  });
+
+  @override
+  String toString() {
+    return 'Contact($id, $name $surename, $email)';
+  }
+
+  static Contact fromMap(Map<String, dynamic> map){
+    return Contact(
+        id : map[idColumn],
+        name : map[nameColumn],
+        surename : map[surenameColumn],
+        email : map[emailColumn]);
+  }
+
+  Map<String, dynamic> toMap() {
+    var map = <String, dynamic>{
+      nameColumn: name,
+      emailColumn: email,
+      surenameColumn: surename,
+    };
+    if (id > 0) {
+      map[idColumn] = id;
+    }
+    return map;
+  }
 }

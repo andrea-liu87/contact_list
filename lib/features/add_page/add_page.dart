@@ -1,15 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:upwork_practice/constants/app_const.dart';
+import 'package:upwork_practice/constants/route_names.dart';
 import 'package:upwork_practice/features/detail_page/detail_page.dart';
+import 'package:upwork_practice/features/home_page/contact_list_controller.dart';
 
 import '../../entities/contact.dart';
 
-class AddPage extends StatelessWidget {
+class AddPage extends ConsumerStatefulWidget {
   const AddPage({Key? key}) : super(key: key);
 
   @override
+  ConsumerState<AddPage> createState() => _AddPageState();
+}
+
+class _AddPageState extends ConsumerState<AddPage> {
+  late Contact? _contactData ;
+
+  @override
+  void initState() {
+    super.initState();
+    _contactData = ref.read(selectedContactProvider);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final contactData = ModalRoute.of(context)!.settings.arguments as Contact?;
     return Card(
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 100),
@@ -20,21 +35,30 @@ class AddPage extends StatelessWidget {
             children: [
               FormField(
               labelString: 'Name',
-              initialValue: contactData?.name ?? '',
+              initialValue: _contactData?.name ?? '',
             ),
             FormField(
               labelString: 'Surename',
-              initialValue: contactData?.surename ?? '',
+              initialValue: _contactData?.surename ?? '',
             ),
             FormField(
               labelString: 'Email',
-              initialValue: contactData?.email ?? '',
+              initialValue: _contactData?.email ?? '',
               inputType: TextInputType.emailAddress,
             ),
             const Spacer(),
             EditButton(
               text: 'SAVE',
-              onPressed: () {},
+              onPressed: () {
+                Contact contact = Contact(id: 0, name: "Andrea", surename: "Liu", email: "test@yahoo.com");
+                if (_contactData == null) {
+                  ref.read(contactListControllerProvider.notifier).saveContact(
+                      contact: contact);
+                } else {
+                  ref.read(contactListControllerProvider.notifier).updateContact(contact: contact);
+                }
+                Navigator.pushNamed(context, RouteNames.homePage);
+              },
             ),
           ],
           ),

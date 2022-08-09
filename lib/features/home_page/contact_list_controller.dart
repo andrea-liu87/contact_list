@@ -12,14 +12,22 @@ class ContactListController extends StateNotifier<AsyncValue<List<Contact>>> {
     getContactList(filterText: filterText);
   }
 
-  getContactList({required String filterText}) {
+  getContactList({required String filterText}) async {
     try {
       state = const AsyncValue.loading();
-      List<Contact> contactList = _contactListRepository.getContactList(filterText);
+      List<Contact> contactList = await _contactListRepository.getContactList(filterText);
       state = AsyncValue.data(contactList);
     } catch (e) {
       state = AsyncValue.error(e);
     }
+  }
+
+  saveContact({required Contact contact}) async {
+    await _contactListRepository.saveContact(contact);
+  }
+
+  updateContact({required Contact contact}) async {
+    await _contactListRepository.updateContact(contact);
   }
 }
 

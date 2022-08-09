@@ -20,12 +20,12 @@ class ContentView extends ConsumerWidget {
   }
 }
 
-class ContactListView extends ConsumerWidget {
+class ContactListView extends StatelessWidget {
   const ContactListView({Key? key, required this.contactList}) : super(key: key);
   final List<Contact> contactList;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return ListView.separated(
       itemCount: contactList.length,
       itemBuilder: (context, position) {
