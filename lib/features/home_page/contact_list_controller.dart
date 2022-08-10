@@ -49,3 +49,12 @@ final contactListControllerProvider = StateNotifierProvider.autoDispose<
   final filterText = ref.watch(searchTextProvider);
   return ContactListController(contactListRepository, filterText: filterText);
 });
+
+final selectedContactProvider = StateProvider<Contact?>((ref) {
+  return null;
+});
+
+final searchTextProvider = StateProvider<String>((ref) {
+  return '';
+});
+

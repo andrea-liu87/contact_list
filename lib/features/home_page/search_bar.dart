@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../constants/app_const.dart';
-
-final searchTextProvider = StateProvider<String>((ref) {
-  return '';
-});
+import 'contact_list_controller.dart';
 
 class SearchBar extends ConsumerStatefulWidget {
   const SearchBar({Key? key}) : super(key: key);

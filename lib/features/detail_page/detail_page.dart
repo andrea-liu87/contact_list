@@ -6,9 +6,6 @@ import 'package:upwork_practice/constants/route_names.dart';
 import '../../entities/contact.dart';
 import '../home_page/contact_list_controller.dart';
 
-final selectedContactProvider = StateProvider<Contact?>((ref) {
-  return null;
-});
 class DetailPage extends ConsumerStatefulWidget {
   const DetailPage({
     Key? key,
@@ -27,7 +24,7 @@ class _DetailPageState extends ConsumerState<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final contactData = ModalRoute.of(context)!.settings.arguments as Contact;
+    Contact? contactData = ref.read(selectedContactProvider);
     return Container(
       color: AppConst.kGray,
       child: Center(
@@ -48,17 +45,16 @@ class _DetailPageState extends ConsumerState<DetailPage> {
                       radius: 46,
                       backgroundColor: AppConst.kRedTitle,
                       child: Text(
-                        contactData.name.substring(0, 1) +
-                            contactData.surename.substring(0, 1),
+                        '${contactData?.name.substring(0, 1)}${contactData?.surename.substring(0, 1)}',
                         style: const TextStyle(fontSize: 40, color: Colors.white),
                       ),
                     ),
                     Text(
-                      '${contactData.name} ${contactData.surename}',
+                      '${contactData?.name} ${contactData?.surename}',
                       style: AppConst.textStyleTitle.copyWith(fontSize: 48),
                     ),
                     Text(
-                      contactData.email,
+                      contactData?.email ?? '',
                       style: AppConst.textStyleGeneral.copyWith(fontSize: 22),
                     ),
                     const Spacer(),
@@ -68,14 +64,13 @@ class _DetailPageState extends ConsumerState<DetailPage> {
                         children: [
                           EditButton(
                             onPressed: (){
-                              ref.read(selectedContactProvider.state).state = contactData;
                             Navigator.pushNamed(context, RouteNames.addPage);
                           },
                             text: 'EDIT',),
                           const SizedBox(width: 5,),
                           EditButton(
                             onPressed: (){
-                              ref.read(contactListControllerProvider.notifier).deleteContact(contact: contactData);
+                              ref.read(contactListControllerProvider.notifier).deleteContact(contact: contactData!);
                               Navigator.pushNamedAndRemoveUntil(context, RouteNames.homePage, (Route<dynamic> route) => false);
                             },
                             text: 'DELETE',),

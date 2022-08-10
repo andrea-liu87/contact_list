@@ -20,12 +20,12 @@ class ContentView extends ConsumerWidget {
   }
 }
 
-class ContactListView extends StatelessWidget {
+class ContactListView extends ConsumerWidget {
   const ContactListView({Key? key, required this.contactList}) : super(key: key);
   final List<Contact> contactList;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ListView.separated(
       itemCount: contactList.length,
       itemBuilder: (context, position) {
@@ -38,6 +38,7 @@ class ContactListView extends StatelessWidget {
               ),
               subtitle: Text(contactList[position].email, style: AppConst.textStyleGeneral,),
               onTap: (){
+                ref.read(selectedContactProvider.state).state = contactList[position];
                 Navigator.pushNamed(context, RouteNames.detailPage, arguments: contactList[position]);
                 },
           ),

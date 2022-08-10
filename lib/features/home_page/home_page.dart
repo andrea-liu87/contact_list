@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:upwork_practice/features/home_page/search_bar.dart';
 
 import '../../constants/route_names.dart';
-import '../detail_page/detail_page.dart';
+import 'contact_list_controller.dart';
 import 'content_view.dart';
 
 class HomePage extends ConsumerWidget {
