@@ -1,31 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:upwork_practice/constants/app_const.dart';
 import 'package:upwork_practice/constants/route_names.dart';
 import 'package:upwork_practice/features/detail_page/detail_page.dart';
-import 'package:upwork_practice/features/home_page/contact_list_controller.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../entities/contact.dart';
 
-class AddPage extends ConsumerStatefulWidget {
+class AddPage extends StatefulWidget {
   const AddPage({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<AddPage> createState() => _AddPageState();
+  State<AddPage> createState() => _AddPageState();
 }
 
-class _AddPageState extends ConsumerState<AddPage> {
-  late Contact? _contactData ;
-
-  @override
-  void initState() {
-    super.initState();
-    _contactData = ref.read(selectedContactProvider);
-  }
+class _AddPageState extends State<AddPage> {
 
   @override
   Widget build(BuildContext context) {
+    final _contactData = ModalRoute.of(context)!.settings.arguments as Contact;
     final _formKey = GlobalKey<FormBuilderState>();
     return Card(
         child: Container(
@@ -39,15 +31,15 @@ class _AddPageState extends ConsumerState<AddPage> {
               children: [
                 FormField(
                 labelString: 'Name',
-                initialValue: _contactData?.name ?? '',
+                initialValue: _contactData.name ?? '',
               ),
               FormField(
                 labelString: 'Surename',
-                initialValue: _contactData?.surename ?? '',
+                initialValue: _contactData.surename ?? '',
               ),
               FormField(
                 labelString: 'Email',
-                initialValue: _contactData?.email ?? '',
+                initialValue: _contactData.email ?? '',
                 inputType: TextInputType.emailAddress,
               ),
               const Spacer(),
@@ -63,14 +55,8 @@ class _AddPageState extends ConsumerState<AddPage> {
                   );
                   if (contact.name.isEmpty && contact.surename.isEmpty && contact.email.isEmpty){
                     return;
-                  } else if (_contactData == null) {
-                    ref.read(contactListControllerProvider.notifier).saveContact(
-                        contact: contact);
-                    print('save : '+contact.toString());
-                  } else {
-                    contact.id = _contactData!.id;
-                    ref.read(contactListControllerProvider.notifier).updateContact(contact: contact);
-                    print('update : '+contact.toString());
+                  }  else {
+                    // save Contact here
                   }
                   Navigator.pushNamedAndRemoveUntil(context, RouteNames.homePage, (Route<dynamic> route) => false);
                 },

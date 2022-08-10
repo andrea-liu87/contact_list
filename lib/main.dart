@@ -5,7 +5,7 @@ import 'package:upwork_practice/constants/app_routes.dart';
 import 'package:upwork_practice/constants/route_names.dart';
 
 void main() {
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

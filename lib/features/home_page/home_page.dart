@@ -6,12 +6,12 @@ import '../../constants/route_names.dart';
 import '../detail_page/detail_page.dart';
 import 'content_view.dart';
 
-class HomePage extends ConsumerWidget {
+class HomePage extends StatelessWidget {
   const HomePage({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -33,7 +33,6 @@ class HomePage extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          ref.read(selectedContactProvider.state).state = null;
           Navigator.pushNamed(context, RouteNames.addPage);
         },
         child: const Icon(

@@ -4,21 +4,17 @@ import 'package:upwork_practice/constants/app_const.dart';
 import 'package:upwork_practice/constants/route_names.dart';
 
 import '../../entities/contact.dart';
-import '../home_page/contact_list_controller.dart';
 
-final selectedContactProvider = StateProvider<Contact?>((ref) {
-  return null;
-});
-class DetailPage extends ConsumerStatefulWidget {
+class DetailPage extends StatefulWidget {
   const DetailPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  ConsumerState<DetailPage> createState() => _DetailPageState();
+  State<DetailPage> createState() => _DetailPageState();
 }
 
-class _DetailPageState extends ConsumerState<DetailPage> {
+class _DetailPageState extends State<DetailPage> {
 
   @override
   void initState() {
@@ -68,14 +64,14 @@ class _DetailPageState extends ConsumerState<DetailPage> {
                         children: [
                           EditButton(
                             onPressed: (){
-                              ref.read(selectedContactProvider.state).state = contactData;
-                            Navigator.pushNamed(context, RouteNames.addPage);
+                              // go to addPage and display contact
+                            Navigator.pushNamed(context, RouteNames.addPage, arguments: contactData);
                           },
                             text: 'EDIT',),
                           const SizedBox(width: 5,),
                           EditButton(
                             onPressed: (){
-                              ref.read(contactListControllerProvider.notifier).deleteContact(contact: contactData);
+                              // delete Contact logic here
                               Navigator.pushNamedAndRemoveUntil(context, RouteNames.homePage, (Route<dynamic> route) => false);
                             },
                             text: 'DELETE',),

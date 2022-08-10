@@ -1,27 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../constants/app_const.dart';
 
-final searchTextProvider = StateProvider<String>((ref) {
-  return '';
-});
-
-class SearchBar extends ConsumerStatefulWidget {
+class SearchBar extends StatefulWidget {
   const SearchBar({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<SearchBar> createState() => _SearchBarState();
+  State<SearchBar> createState() => _SearchBarState();
 }
 
-class _SearchBarState extends ConsumerState<SearchBar> {
-  late final _searchController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _searchController.text = ref.read(searchTextProvider);
-  }
+class _SearchBarState extends State<SearchBar> {
+  final _searchController = TextEditingController();
 
   @override
   void dispose() {
@@ -46,7 +35,9 @@ class _SearchBarState extends ConsumerState<SearchBar> {
           Expanded(
             child: TextFormField(
               controller: _searchController,
-              onChanged: (value) => ref.read(searchTextProvider.state).state = value,
+              onChanged: (value) {
+                // refresh contact list display using value as filter text
+              },
               decoration: const InputDecoration(
                 isDense: true,
                 hintText: 'Search Contact',

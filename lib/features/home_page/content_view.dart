@@ -3,19 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:upwork_practice/constants/route_names.dart';
 import '../../constants/app_const.dart';
 import '../../entities/contact.dart';
-import 'contact_list_controller.dart';
 
-class ContentView extends ConsumerWidget {
+class ContentView extends StatelessWidget {
   const ContentView({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final contactList = ref.watch(contactListControllerProvider);
+  Widget build(BuildContext context) {
+    final contactList = <Contact>[
+      Contact(id: 0, name: 'Shania', surename: 'Twain', email: 's.twain@yahoo.com'),
+      Contact(id: 1, name: 'Leonardo', surename: 'Dicaprio', email: 'leo.d@gmail.com')
+    ];
     return Flexible(
-      child: contactList.when(
-          data: (data) => ContactListView(contactList: data,),
-          error: (e, __) => Text(e.toString()),
-          loading: () => const Center(child: CircularProgressIndicator())),
+      child: ContactListView(contactList: contactList,),
     );
   }
 }
