@@ -17,7 +17,7 @@ class _AddPageState extends State<AddPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _contactData = ModalRoute.of(context)!.settings.arguments as Contact;
+    final _contactData = ModalRoute.of(context)!.settings.arguments as Contact?;
     final _formKey = GlobalKey<FormBuilderState>();
     return Card(
         child: Container(
@@ -31,15 +31,15 @@ class _AddPageState extends State<AddPage> {
               children: [
                 FormField(
                 labelString: 'Name',
-                initialValue: _contactData.name ?? '',
+                initialValue: _contactData?.name ?? '',
               ),
               FormField(
                 labelString: 'Surename',
-                initialValue: _contactData.surename ?? '',
+                initialValue: _contactData?.surename ?? '',
               ),
               FormField(
                 labelString: 'Email',
-                initialValue: _contactData.email ?? '',
+                initialValue: _contactData?.email ?? '',
                 inputType: TextInputType.emailAddress,
               ),
               const Spacer(),
